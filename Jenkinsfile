@@ -21,25 +21,7 @@ node {
         bat "mvnw com.github.eirslett:frontend-maven-plugin:npm"
     }
 
-    stage('backend tests') {
-        try {
-            bat "./mvnw test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml'
-        }
-    }
 
-    stage('frontend tests') {
-        try {
-            bat "mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='test -- -u'"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/test-results/jest/TESTS-*.xml'
-        }
-    }
 
     stage('packaging') {
         bat "mvnw verify -Pprod -DskipTests"
